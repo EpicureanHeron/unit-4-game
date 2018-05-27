@@ -10,7 +10,7 @@
 }
 
 .fighter2 {
-    background-color: blue;
+    background-color: lightblue;
 }
 
 .fighter3 {
@@ -32,3 +32,12 @@
     display: table;
     clear: both;
   }
+
+p {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.dead {
+    display:none;
+}
