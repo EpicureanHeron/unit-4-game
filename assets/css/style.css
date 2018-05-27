@@ -1,0 +1,34 @@
+.character {
+    height: 250px;
+    width: 250px;
+    float: left;
+    margin: 10px 10px 10px 10px;
+}
+
+.fighter1 {
+    background-color: red;
+}
+
+.fighter2 {
+    background-color: blue;
+}
+
+.fighter3 {
+  
+    background-color: yellow;
+   
+}
+
+.fighter4 {
+    background-color: green;
+}
+
+#chosenFighter {
+
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
