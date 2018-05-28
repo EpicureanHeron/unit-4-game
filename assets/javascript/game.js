@@ -95,7 +95,7 @@ $(document).ready(function() {
     writePage();
 
     //when a div containing the class chooseable is clicked, one of three things should happen
-    $(".character").click(function() {  
+    $(".chooseable").click(function() {  
         //if the user has not selected a fighter yet, this triggers
         if (isFighterSelected === false) {
 
@@ -147,6 +147,7 @@ $(document).ready(function() {
 
     $(".attack").click(function() {
         //only works if both the fighter and enemy is selected
+        console.log("Attack!!!")
         if ((isEnemySelected) && (isFighterSelected)) {
     
        currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
@@ -195,6 +196,7 @@ $(document).ready(function() {
             console.log(classesToBeAdded)
             newDiv.addClass(classesToBeAdded);
             $("#chosenFighter").append(newDiv);
+            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
 
 
             
@@ -203,7 +205,7 @@ $(document).ready(function() {
 
            //$(".fighterDisplay").append
         }
-        writePage();
+       // writePage();
     })
 
 
