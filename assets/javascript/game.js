@@ -26,6 +26,7 @@ var wins = 0;
 //object which will be one of the fighters
 var fighter1 = { 
     displayArea: ".fighter1",
+    class: "fighter1",
     name: "Luke Skywalker",
     currentHP: 50,
     maxHP: 50,
@@ -36,6 +37,7 @@ var fighter1 = {
 //object which will be one of the fighters
 var fighter2 = {
     displayArea: ".fighter2",
+    class: "fighter2",
     name: "Darth Vader",
     currentHP: 150,
     maxHP: 150,
@@ -46,6 +48,7 @@ var fighter2 = {
 //object which will be one of the fighters
 var fighter3 = {
     displayArea: ".fighter3",
+    class: "fighter3",
     name: "Yoda",
     currentHP: 100,
     maxHP: 100,
@@ -56,6 +59,7 @@ var fighter3 = {
 //object which will be one of the fighters
 var fighter4 = {
     displayArea: ".fighter4",
+    class: "fighter4",
     name: "Thrawn",
     currentHP: 1000,
     maxHP: 1000,
@@ -176,12 +180,8 @@ $(document).ready(function() {
             //creates a new div
             var newDiv = $("<div>");
             //grabs the class from the object in the array
-            var areaToDisplay = fightersArr[i].displayArea;
-            //determines the lenght of that class
-            var lengthOfString = areaToDisplay.length;
-            //removes the dot
-            var removedTheDot = areaToDisplay.substring(1, lengthOfString);
-            var classesToBeAdded = removedTheDot + " character chooseable";
+            
+            var classesToBeAdded = fightersArr[i].class + " character chooseable";
             console.log(classesToBeAdded)
             newDiv.addClass(classesToBeAdded);
             $("#chosenFighter").append(newDiv);
