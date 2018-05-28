@@ -27,7 +27,8 @@ var wins = 0;
 var fighter1 = { 
     displayArea: ".fighter1",
     name: "Luke Skywalker",
-    HP: 50,
+    currentHP: 50,
+    maxHP: 50,
     attack: 50,
     attackMod: 5
 };
@@ -36,7 +37,8 @@ var fighter1 = {
 var fighter2 = {
     displayArea: ".fighter2",
     name: "Darth Vader",
-    HP: 150,
+    currentHP: 150,
+    maxHP: 150,
     attack: 60,
     attackMod: 5
 };
@@ -45,7 +47,8 @@ var fighter2 = {
 var fighter3 = {
     displayArea: ".fighter3",
     name: "Yoda",
-    HP: 100,
+    currentHP: 100,
+    maxHP: 100,
     attack: 5,
     attackMod: 5
 };
@@ -54,7 +57,8 @@ var fighter3 = {
 var fighter4 = {
     displayArea: ".fighter4",
     name: "Thrawn",
-    HP: 1000,
+    currentHP: 1000,
+    maxHP: 1000,
     attack: 20,
     attackMod: 5
 };
@@ -74,7 +78,7 @@ $(document).ready(function() {
     function writePage() {
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
-            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].HP  + "<br>" +"attack: " + fightersArr[i].attack  + "<br>" + "</p>");
+            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].attack  + "<br>" + "</p>");
             }
         }
 
@@ -133,14 +137,14 @@ $(document).ready(function() {
         //only works if both the fighter and enemy is selected
         if ((isEnemySelected) && (isFighterSelected)) {
     
-       currentEnemy.HP = currentEnemy.HP - selectedFighter.attack;
+       currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.attack;
        
-       selectedFighter.HP = selectedFighter.HP - currentEnemy.attack;
+       selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.attack;
         
        //adds attack modifer after attack
        selectedFighter.attack += selectedFighter.attackMod;
       
-       if (currentEnemy.HP <= 0) {
+       if (currentEnemy.currentHP <= 0) {
        //makes the enemy disappear if they go below 0 HP which makes their display: none 
         $(currentEnemy.displayArea).addClass("dead");
         isEnemySelected = false;
@@ -148,7 +152,7 @@ $(document).ready(function() {
         console.log(wins);
         
         }
-        else if (selectedFighter.HP <= 0){
+        else if (selectedFighter.currentHP <= 0){
          console.log("hero dead")
 
          alert("you lose!")
@@ -157,7 +161,39 @@ $(document).ready(function() {
         }
     })
     $(".reset").click(function() { 
+        console.log("reset has been hit")
+        //empties the area on the screen
+        $("#chosenFighter, #chosenEnemy, .fighterDisplay").empty();
+        //removes the class "dead,", though this may not be needed at all
+        $(".character").removeClass("dead")
         
+        isFighterSelected = false;
+        isEnemySelected = false;
+        //cycles through the fightersArr
+        for (i = 0; i < fightersArr.length; i ++) {
+            //restores the objects HP to the max
+            fightersArr[i].currentHP = fightersArr[i].maxHP;
+            //creates a new div
+            var newDiv = $("<div>");
+            //grabs the class from the object in the array
+            var areaToDisplay = fightersArr[i].displayArea;
+            //determines the lenght of that class
+            var lengthOfString = areaToDisplay.length;
+            //removes the dot
+            var removedTheDot = areaToDisplay.substring(1, lengthOfString);
+            var classesToBeAdded = removedTheDot + " character chooseable";
+            console.log(classesToBeAdded)
+            newDiv.addClass(classesToBeAdded);
+            $("#chosenFighter").append(newDiv);
+
+
+            
+            
+          //  $("#chosenFighter").append
+
+           //$(".fighterDisplay").append
+        }
+        writePage();
     })
 
 
