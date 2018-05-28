@@ -68,20 +68,15 @@ var fightersArrIndex;
 //array which has all the fighters in it, used to populate the page through a for loop
 
 
-
 //initiliazes the power of jQuery
 $(document).ready(function() {
-
-    //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
+    //updates all the fighter's information   
     function writePage() {
-       
-
+        //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
             $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].HP  + "<br>" +"attack: " + fightersArr[i].attack  + "<br>" + "</p>");
             }
-        
-
-     }
+        }
 
     writePage();
 
@@ -94,19 +89,15 @@ $(document).ready(function() {
             
             //grabs the index number passed from the html 
             fightersArrIndex = $(this).attr("fightersArrIndex");
-            
-          
+                     
             //grabs the object from the array based off of that piece of passed data
             selectedFighter = fightersArr[fightersArrIndex];
-           
-           
            
             //updates the screen
             $("#chosenFighter").append($(this));
            
             console.log("The heroe's name: " + selectedFighter.name);
-                     
-
+                    
         }
         else if (isEnemySelected === false) {
             isEnemySelected = true
@@ -131,17 +122,11 @@ $(document).ready(function() {
     
                 console.log("The enemy's name is: " + currentEnemy.name);
             }
-           
-            
-            
-           
+
         }         
         else {
             alert("You have all you need");
         }
-    
-        
-    
     })
 
     $(".attack").click(function() {
@@ -162,20 +147,18 @@ $(document).ready(function() {
         wins += 1;
         console.log(wins);
         
-        
         }
         else if (selectedFighter.HP <= 0){
          console.log("hero dead")
 
          alert("you lose!")
         }
-
        writePage();
-
-
         }
     })
-    $(".attack").click(function() { })
+    $(".reset").click(function() { 
+        
+    })
 
 
 })
