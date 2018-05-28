@@ -5,7 +5,9 @@
 //4. Add pictures and stuff
 //5. DONE 5/27/2018 Add an attribute to all fighters which allows for their attack power to increase 
 //6. Watch the demo again, it would print the battle out at the bottom, should be easy to do, just something I need to add 
-//7. 
+//7. Reset currently is emptying all areas defined on the screen. When this happens and I use the append 
+    //it seems to not be acting the way I hope it to be. Furthermore, I'm not sure WHY I am unable to click on anything after reset. It is 
+    //adding the "choosable" class but on a click it is not being logged
 
 
 //boolean value to determine if fighter has been selected 
