@@ -31,6 +31,7 @@ var fighter1 = {
     currentHP: 50,
     maxHP: 50,
     attack: 50,
+    currentAttack: 50,
     attackMod: 5
 };
 
@@ -42,6 +43,7 @@ var fighter2 = {
     currentHP: 150,
     maxHP: 150,
     attack: 60,
+    currentAttack: 60,
     attackMod: 5
 };
 
@@ -53,6 +55,7 @@ var fighter3 = {
     currentHP: 100,
     maxHP: 100,
     attack: 5,
+    currentAttack: 5,
     attackMod: 5
 };
 
@@ -64,6 +67,7 @@ var fighter4 = {
     currentHP: 1000,
     maxHP: 1000,
     attack: 20,
+    currentAttack: 20,
     attackMod: 5
 };
 
@@ -82,7 +86,7 @@ $(document).ready(function() {
     function writePage() {
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
-            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].attack  + "<br>" + "</p>");
+            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
             }
         }
 
@@ -92,6 +96,8 @@ $(document).ready(function() {
     $(".character").click(function() {  
         //if the user has not selected a fighter yet, this triggers
         if (isFighterSelected === false) {
+
+            console.log("hero chosen!")
 
             isFighterSelected = true;
             
@@ -141,12 +147,12 @@ $(document).ready(function() {
         //only works if both the fighter and enemy is selected
         if ((isEnemySelected) && (isFighterSelected)) {
     
-       currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.attack;
+       currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
        
-       selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.attack;
+       selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
         
        //adds attack modifer after attack
-       selectedFighter.attack += selectedFighter.attackMod;
+       selectedFighter.currentAttack += selectedFighter.attackMod;
       
        if (currentEnemy.currentHP <= 0) {
        //makes the enemy disappear if they go below 0 HP which makes their display: none 
@@ -170,6 +176,7 @@ $(document).ready(function() {
         $("#chosenFighter, #chosenEnemy, .fighterDisplay").empty();
         //removes the class "dead,", though this may not be needed at all
         $(".character").removeClass("dead")
+
         
         isFighterSelected = false;
         isEnemySelected = false;
@@ -177,6 +184,7 @@ $(document).ready(function() {
         for (i = 0; i < fightersArr.length; i ++) {
             //restores the objects HP to the max
             fightersArr[i].currentHP = fightersArr[i].maxHP;
+            fightersArr[i].currentAttack = fightersArr[i].attack;
             //creates a new div
             var newDiv = $("<div>");
             //grabs the class from the object in the array
