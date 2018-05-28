@@ -41,3 +41,8 @@ p {
 .dead {
     display:none;
 }
+
+.newClass {
+    color: white;
+}
+

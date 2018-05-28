@@ -1,13 +1,11 @@
 //TODOS
 //1. DONE 5/27/2018 Make the selectedFighter not selectable again as an enemy...probably remove that class or something??? 
 //2. Winning is defeating all 3 enemeys, so need to add that as a criteria
-//3. Reset button
+//3. DONE 5/28/2018 Reset button
 //4. Add pictures and stuff
 //5. DONE 5/27/2018 Add an attribute to all fighters which allows for their attack power to increase 
 //6. Watch the demo again, it would print the battle out at the bottom, should be easy to do, just something I need to add 
-//7. Reset currently is emptying all areas defined on the screen. When this happens and I use the append 
-    //it seems to not be acting the way I hope it to be. Furthermore, I'm not sure WHY I am unable to click on anything after reset. It is 
-    //adding the "choosable" class but on a click it is not being logged
+//7. Field which lists the battle info with attack strength and HP, is written each time. Also is cleared by the reset button
 
 
 //boolean value to determine if fighter has been selected 
@@ -94,8 +92,12 @@ $(document).ready(function() {
 
     writePage();
 
-    //when a div containing the class chooseable is clicked, one of three things should happen
-    $(".chooseable").click(function() {  
+    //apparenlty with jQuery, this listens for any .chooseable element that was created with the page loaded
+    //which didn't work when I was hitting reset
+   // $(".chooseable").click(function() {  
+
+   //this one is something about "delegating" which works now with the reset function and the rewritten fighters that appear (YES THEY ARE CLICKABLE)
+    $('body').on('click', '.chooseable', function () {
         //if the user has not selected a fighter yet, this triggers
         if (isFighterSelected === false) {
 
@@ -150,8 +152,11 @@ $(document).ready(function() {
         console.log("Attack!!!")
         if ((isEnemySelected) && (isFighterSelected)) {
     
+        //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
+
+       //updates the HP of the enemy
        currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
-       
+       //updates the HP of the fighter
        selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
         
        //adds attack modifer after attack
@@ -174,38 +179,36 @@ $(document).ready(function() {
         }
     })
     $(".reset").click(function() { 
-        console.log("reset has been hit")
+        console.log("reset has been hit");
+
         //empties the area on the screen
         $("#chosenFighter, #chosenEnemy, .fighterDisplay").empty();
-        //removes the class "dead,", though this may not be needed at all
-        $(".character").removeClass("dead")
-
-        
+       
+        //resets the two booleans which govern which area of the page a fighter is placed
         isFighterSelected = false;
         isEnemySelected = false;
         //cycles through the fightersArr
         for (i = 0; i < fightersArr.length; i ++) {
             //restores the objects HP to the max
             fightersArr[i].currentHP = fightersArr[i].maxHP;
+            //restores the objects attack to its normal level
             fightersArr[i].currentAttack = fightersArr[i].attack;
+
             //creates a new div
             var newDiv = $("<div>");
-            //grabs the class from the object in the array
-            
+            //grabs the class from the object and adds the other two classes
             var classesToBeAdded = fightersArr[i].class + " character chooseable";
-            console.log(classesToBeAdded)
+
+            //adds the classes to the dive
             newDiv.addClass(classesToBeAdded);
-            $("#chosenFighter").append(newDiv);
-            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
-
-
-            
-            
-          //  $("#chosenFighter").append
-
-           //$(".fighterDisplay").append
+            //adds the fightersArrIndex based on the iteration
+            newDiv.attr("fightersArrIndex", i);
+            //adds the div to the display
+            $(".fighterDisplay").append(newDiv);
+        
         }
-       // writePage();
+        //updates the new divs with the fighter's info
+        writePage();
     })
 
 
