@@ -5,7 +5,8 @@
 //4. Add pictures and stuff
 //5. DONE 5/27/2018 Add an attribute to all fighters which allows for their attack power to increase 
 //6. Watch the demo again, it would print the battle out at the bottom, should be easy to do, just something I need to add 
-//7. Field which lists the battle info with attack strength and HP, is written each time. Also is cleared by the reset button
+//7. DONE 5/28/2018 Field which lists the battle info with attack strength and HP, is written each time. Also is cleared by the reset button
+
 
 
 //boolean value to determine if fighter has been selected 
@@ -88,7 +89,20 @@ $(document).ready(function() {
         for (i = 0; i < fightersArr.length; i++) {
             $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
             }
+            //only triggers if both a fighter and an enemy is selected, it updates the battlelog and the counterattack log
+        if((isFighterSelected) && (isEnemySelected)) {
+
+            $(".battleLog").html(selectedFighter.name + " did " + selectedFighter.currentAttack + " damage to " + currentEnemy.name );
+            $(".counterAttackLog").html(currentEnemy.name + " counterattacked for " + currentEnemy.currentAttack + " damage to " + selectedFighter.name )
+            }
+            
+        //only triggers if wins are greater than 0, so an enemy has been defeated, and no enemy has been selected (which is flipped off by the death of an enemy)
+        if (wins > 0 && isEnemySelected === false) {
+            $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
+            $(".counterAttackLog").empty();
+
         }
+    }
 
     writePage();
 
@@ -159,41 +173,45 @@ $(document).ready(function() {
         console.log("Attack!!!")
         if ((isEnemySelected) && (isFighterSelected)) {
     
-        //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
+            //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
 
-       //updates the HP of the enemy
-       currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
-       //updates the HP of the fighter
-       selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
+        //updates the HP of the enemy
+        currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
+        //updates the HP of the fighter
+        selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
+            
+        //adds attack modifer after attack
+        selectedFighter.currentAttack += selectedFighter.attackMod;
         
-       //adds attack modifer after attack
-       selectedFighter.currentAttack += selectedFighter.attackMod;
-      
-       if (currentEnemy.currentHP <= 0) {
-       //makes the enemy disappear if they go below 0 HP which makes their display: none 
-        $(currentEnemy.displayArea).addClass("dead");
-        isEnemySelected = false;
-        wins += 1;
-        console.log(wins);
-        
-        }
-        else if (selectedFighter.currentHP <= 0){
-         console.log("hero dead")
+            if (currentEnemy.currentHP <= 0) {
+                
+                //makes the enemy disappear if they go below 0 HP which makes their display: none 
+                $(currentEnemy.displayArea).addClass("dead");
+                isEnemySelected = false;
+                wins += 1;
+                console.log(wins);
+                
+            }
+            else if (selectedFighter.currentHP <= 0){
+                
+                console.log("hero dead")
 
-         alert("you lose!")
-        }
-       writePage();
-        }
+                alert("you lose!")
+            }
+          
+            }
+            writePage();
     })
     $(".reset").click(function() { 
         console.log("reset has been hit");
 
         //empties the area on the screen
-        $("#chosenFighter, #chosenEnemy, #enemiesToSelect, .fighterDisplay").empty();
+        $("#chosenFighter, #chosenEnemy, #enemiesToSelect, .battleLog, .counterAttackLog,  .fighterDisplay").empty();
        
         //resets the two booleans which govern which area of the page a fighter is placed
         isFighterSelected = false;
         isEnemySelected = false;
+        wins = 0;
         //cycles through the fightersArr
         for (i = 0; i < fightersArr.length; i ++) {
             //restores the objects HP to the max
