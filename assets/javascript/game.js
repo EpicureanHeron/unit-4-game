@@ -76,6 +76,10 @@ var fightersArr = [fighter1, fighter2, fighter3, fighter4];
 
 //This is used to determine what is the index number in the fightersArr when one of the div blocks are selected. It associated with a piece of data in the <div> tag
 var fightersArrIndex;
+//Different states the game could be in 
+var gameStateArr = ["fighterSelected", "currentEnemyDead", "battle", "newEnemy", "win", "lose"]
+//This will take one of the 6 game states and will be used to write the page appropriately
+var gameState;
 
 
 //array which has all the fighters in it, used to populate the page through a for loop
