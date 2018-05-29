@@ -90,17 +90,29 @@ $(document).ready(function() {
             $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
             }
             //only triggers if both a fighter and an enemy is selected, it updates the battlelog and the counterattack log
-        if((isFighterSelected) && (isEnemySelected)) {
+
+
+            //the below if/else if/else if/ else statement is...messy, maybe set up a variable to help regulate this for different "states" of the game
+            //ie state = heroSelected, enemyDefeated, newEnemySelected, battle, lose, win
+        if ((isFighterSelected) && (isEnemySelected === false) && wins === 0) {
+            $(".battleLog").html("You have chosen " + selectedFighter.name + "! Good luck! ")
+        }
+        
+        else if ((isFighterSelected) && (isEnemySelected)) {
 
             $(".battleLog").html(selectedFighter.name + " did " + selectedFighter.currentAttack + " damage to " + currentEnemy.name );
             $(".counterAttackLog").html(currentEnemy.name + " counterattacked for " + currentEnemy.currentAttack + " damage to " + selectedFighter.name )
             }
             
         //only triggers if wins are greater than 0, so an enemy has been defeated, and no enemy has been selected (which is flipped off by the death of an enemy)
-        if (wins > 0 && isEnemySelected === false) {
+        else if  (wins > 0 && isEnemySelected === false) {
             $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
             $(".counterAttackLog").empty();
 
+        }
+        else {
+            $(".battleLog").empty();
+            $(".counterAttackLog").empty();
         }
     }
 
@@ -136,7 +148,7 @@ $(document).ready(function() {
             }
            
             console.log("The heroe's name: " + selectedFighter.name);
-                    
+            writePage();     
         }
         else if (isEnemySelected === false) {
             isEnemySelected = true
