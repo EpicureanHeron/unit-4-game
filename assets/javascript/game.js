@@ -111,8 +111,15 @@ $(document).ready(function() {
             //grabs the object from the array based off of that piece of passed data
             selectedFighter = fightersArr[fightersArrIndex];
            
-            //updates the screen
+            //updates the screen by moving the clicked fighter to the chosen fighter area
             $("#chosenFighter").append($(this));
+            //updates the screen by appending all the other characters to the enemiesToSelect area
+            for (i = 0; i < fightersArr.length; i++){
+                if (fightersArr[i] !== selectedFighter) {
+                    var enemy = $(fightersArr[i].displayArea)
+                    $("#enemiesToSelect").append(enemy);
+                }
+            }
            
             console.log("The heroe's name: " + selectedFighter.name);
                     
@@ -182,7 +189,7 @@ $(document).ready(function() {
         console.log("reset has been hit");
 
         //empties the area on the screen
-        $("#chosenFighter, #chosenEnemy, .fighterDisplay").empty();
+        $("#chosenFighter, #chosenEnemy, #enemiesToSelect, .fighterDisplay").empty();
        
         //resets the two booleans which govern which area of the page a fighter is placed
         isFighterSelected = false;
