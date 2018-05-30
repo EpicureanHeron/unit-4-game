@@ -96,10 +96,10 @@ $(document).ready(function() {
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
             var newImg = $("<img>");
-            var imgSrc = fightersArr[i].imageSrc
+            var imgSrc = fightersArr[i].imageSrc 
             newImg.attr("src", imgSrc);
             $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
-            $(".battleLog").append(newImg)
+            $(fightersArr[i].displayArea).append(newImg);
             }
             //only triggers if both a fighter and an enemy is selected, it updates the battlelog and the counterattack log
 
