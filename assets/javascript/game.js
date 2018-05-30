@@ -29,6 +29,7 @@ var fighter1 = {
     displayArea: ".fighter1",
     class: "fighter1",
     name: "Luke Skywalker",
+    imageSrc: "assets/images/Borg.jpg",
     currentHP: 50,
     maxHP: 50,
     attack: 50,
@@ -41,6 +42,7 @@ var fighter2 = {
     displayArea: ".fighter2",
     class: "fighter2",
     name: "Darth Vader",
+    imageSrc: "assets/images/Caradassians.jpg",
     currentHP: 150,
     maxHP: 150,
     attack: 60,
@@ -53,6 +55,7 @@ var fighter3 = {
     displayArea: ".fighter3",
     class: "fighter3",
     name: "Yoda",
+    imageSrc: "assets/images/Crusher.jpg",
     currentHP: 100,
     maxHP: 100,
     attack: 5,
@@ -65,6 +68,7 @@ var fighter4 = {
     displayArea: ".fighter4",
     class: "fighter4",
     name: "Thrawn",
+    imageSrc: "assets/images/Data.jpg",
     currentHP: 1000,
     maxHP: 1000,
     attack: 20,
@@ -91,7 +95,11 @@ $(document).ready(function() {
     function writePage() {
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
-            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP  + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
+            var newImg = $("<img>");
+            var imgSrc = fightersArr[i].imageSrc
+            newImg.attr("src", imgSrc);
+            $(fightersArr[i].displayArea).html("<p>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
+            $(".battleLog").append(newImg)
             }
             //only triggers if both a fighter and an enemy is selected, it updates the battlelog and the counterattack log
 
