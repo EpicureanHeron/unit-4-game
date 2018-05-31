@@ -50,3 +50,8 @@ p {
     position: relative;
     margin: auto;
 }
+
+body {
+    background-image: url("../images/background.jpg");
+    background-repeat: repeat;
+} 
