@@ -1,6 +1,6 @@
 .character {
-    height: 300px;
-    width: 280px;
+    height: 280px;
+    width: 210px;
     float: left;
     margin: 10px 10px 10px 10px;
 }
@@ -46,3 +46,7 @@ p {
     color: white;
 }
 
+.fighterImage {
+    position: relative;
+    margin: auto;
+}
