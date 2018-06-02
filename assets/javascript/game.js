@@ -1,11 +1,15 @@
 //TODOS
 //1. DONE 5/27/2018 Make the selectedFighter not selectable again as an enemy...probably remove that class or something??? 
-//2. Winning is defeating all 3 enemeys, so need to add that as a criteria
+//2. Winning is defeating all 3 enemies, so need to add that as a criteria
 //3. DONE 5/28/2018 Reset button
 //4. DONE 6/2/2018 Add pictures and stuff
 //5. DONE 5/27/2018 Add an attribute to all fighters which allows for their attack power to increase 
 //6. DONE 6/2/2018 Watch the demo again, it would print the battle out at the bottom, should be easy to do, just something I need to add 
 //7. DONE 5/28/2018 Field which lists the battle info with attack strength and HP, is written each time. Also is cleared by the reset button
+//8. Style buttons 
+//9. Make the page look cleaner
+//10. make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
+//11. Rewatch the video, go over criteria again
 
 
 
@@ -158,6 +162,7 @@ $(document).ready(function() {
             for (i = 0; i < fightersArr.length; i++){
                 if (fightersArr[i] !== selectedFighter) {
                     var enemy = $(fightersArr[i].displayArea)
+                    
                     $("#enemiesToSelect").append(enemy);
                 }
             }

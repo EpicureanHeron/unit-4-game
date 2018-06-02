@@ -75,7 +75,9 @@ body {
 } 
 
 .fightDisplay {
-    color: white;
-    
+    color: white;  
     font-size: 20px;
+}
+#enemiesToSelect div {
+    background-color: rgb(126, 5, 29)
 }
