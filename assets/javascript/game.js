@@ -1,6 +1,6 @@
 //TODOS
 //1. DONE 5/27/2018 Make the selectedFighter not selectable again as an enemy...probably remove that class or something??? 
-//2. Winning is defeating all 3 enemies, so need to add that as a criteria
+//2. DONE 6/5/2018 Winning is defeating all 3 enemies, so need to add that as a criteria
 //3. DONE 5/28/2018 Reset button
 //4. DONE 6/2/2018 Add pictures and stuff
 //5. DONE 5/27/2018 Add an attribute to all fighters which allows for their attack power to increase 
@@ -11,8 +11,9 @@
 //10. DONE 6/5/2018 make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
 //11. Rewatch the video, go over criteria again
     //Only display HP, no more attack points
-    //hitting attack when no enemy present, update attack area with message "no one here"
+    //DONE 6/5/2018 hitting attack when no enemy present, update attack area with message "no one here"
     //check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
+    //Update page if enenmy is not
 
 
 
@@ -114,6 +115,9 @@ $(document).ready(function() {
 
             //the below if/else if/else if/ else statement is...messy, maybe set up a variable to help regulate this for different "states" of the game
             //ie state = heroSelected, enemyDefeated, newEnemySelected, battle, lose, win
+
+            //the above is what I should do to handle the different states rather than relying on a hodgepodge of settings! 
+
         if ((isFighterSelected) && (isEnemySelected === false) && wins === 0) {
             $(".battleLog").html("You have chosen " + selectedFighter.name + "! Good luck! ")
         }
@@ -135,13 +139,13 @@ $(document).ready(function() {
 
         }
         
-
-      
         
         else {
             $(".battleLog").empty();
             $(".counterAttackLog").empty();
         }
+
+
     }
 
     writePage();
@@ -250,11 +254,9 @@ $(document).ready(function() {
             }
 
             writePage();
+            //had to call this after writePage() because of how things were overwriting one another
 
-            if (!isEnemySelected) {
-                $(".battleLog").html("You need to chose an enemy");
-                $(".counterAttackLog").empty();
-            }
+          
     })
     $(".reset").click(function() { 
         console.log("reset has been hit");
