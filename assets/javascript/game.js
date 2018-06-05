@@ -8,8 +8,11 @@
 //7. DONE 5/28/2018 Field which lists the battle info with attack strength and HP, is written each time. Also is cleared by the reset button
 //8. Style buttons 
 //9. Make the page look cleaner
-//10. make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
+//10. DONE 6/5/2018 make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
 //11. Rewatch the video, go over criteria again
+    //Only display HP, no more attack points
+    //hitting attack when no enemy present, update attack area with message "no one here"
+    //check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
 
 
 
@@ -125,8 +128,16 @@ $(document).ready(function() {
         else if  (wins > 0 && isEnemySelected === false) {
             $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
             $(".counterAttackLog").empty();
+            if (wins === 3) {
+                $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + "!");
+                $(".counterAttackLog").html(selectedFighter.name + " has defeated all challengers! They are victorious! To play again, click the reset button");
+            }
 
         }
+        
+
+      
+        
         else {
             $(".battleLog").empty();
             $(".counterAttackLog").empty();
@@ -152,7 +163,7 @@ $(document).ready(function() {
             fightersArrIndex = $(this).attr("fightersArrIndex");
 
             $(this).addClass("hero")
-                     
+            $(this).removeClass("chooseable");
             //grabs the object from the array based off of that piece of passed data
             selectedFighter = fightersArr[fightersArrIndex];
             
@@ -205,7 +216,10 @@ $(document).ready(function() {
     $(".attack").click(function() {
         //only works if both the fighter and enemy is selected
         console.log("Attack!!!")
-        if ((isEnemySelected) && (isFighterSelected)) {
+       
+
+
+    if ((isEnemySelected) && (isFighterSelected)) {
     
             //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
 
@@ -234,7 +248,13 @@ $(document).ready(function() {
             }
           
             }
+
             writePage();
+
+            if (!isEnemySelected) {
+                $(".battleLog").html("You need to chose an enemy");
+                $(".counterAttackLog").empty();
+            }
     })
     $(".reset").click(function() { 
         console.log("reset has been hit");
