@@ -163,7 +163,14 @@ $(document).ready(function() {
             $(".counterAttackLog").empty();
 
 			}
-		}
+        }
+        
+        else if (gameState === "heroDead") {
+            $(".battleLog").html(selectedFighter.name +" has been defeated by " + currentEnemy.name +"!");
+            $(".counterAttackLog").html("Hit the reset button to try again");
+
+
+        }
         
         
         else {
@@ -235,9 +242,7 @@ $(document).ready(function() {
             
 
         }         
-        else {
-            alert("You have all you need");
-        }
+      
     })
 
     $(".attack").click(function() {
@@ -272,12 +277,18 @@ $(document).ready(function() {
 				
 				console.log("hero dead")
 
-				alert("you lose!")
+                gameState = "heroDead"
+                
+
 				}
 			}	
 			writePage();
 		 
-				}		
+                }	
+                
+        else if (gameState === "heroDead") {
+            return
+        }
 		else {
 			$(".battleLog").html("You need to chose an enemy" );
 			$(".counterAttackLog").empty()
