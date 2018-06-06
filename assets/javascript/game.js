@@ -136,7 +136,8 @@ $(document).ready(function() {
 		
 		else if (gameState === "newEnemy") {
 			$(".battleLog").html(selectedFighter.name + " is fighting " + currentEnemy.name );
-			gameState = "battle"
+            gameState = "battle"
+            console.log(gameState)
 		}
         
         else if (gameState === "battle") {
@@ -209,9 +210,10 @@ $(document).ready(function() {
             console.log("The heroe's name: " + selectedFighter.name);
             writePage();     
         }
-        else if ((gameState === "noEnemy") || (gameState="enemyDefeated")) {
+        else if ((gameState === "noEnemy") || (gameState === "defeatedEnemy")) {
+            console.log("This is the game state before it gets reset in the else if " +gameState)
             gameState = "newEnemy";
-
+            console
              //grabs the index number passed from the html 
             
             fightersArrIndex = $(this).attr("fightersArrIndex");
@@ -254,6 +256,7 @@ $(document).ready(function() {
 			selectedFighter.currentAttack += selectedFighter.attackMod;
 			
 			if (currentEnemy.currentHP <= 0) {
+               
 				gameState = "defeatedEnemy";
 				//makes the enemy disappear if they go below 0 HP which makes their display: none 
 				$(currentEnemy.displayArea).addClass("dead");
