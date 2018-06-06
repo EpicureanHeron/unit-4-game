@@ -1,4 +1,7 @@
 //TODOS
+
+//12. UPDATE WRITE LOGIC WITH GAME STATE ARRAY 
+
 //1. DONE 5/27/2018 Make the selectedFighter not selectable again as an enemy...probably remove that class or something??? 
 //2. DONE 6/5/2018 Winning is defeating all 3 enemies, so need to add that as a criteria
 //3. DONE 5/28/2018 Reset button
@@ -10,10 +13,11 @@
 //9. Make the page look cleaner
 //10. DONE 6/5/2018 make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
 //11. Rewatch the video, go over criteria again
+
     //Only display HP, no more attack points
     //DONE 6/5/2018 hitting attack when no enemy present, update attack area with message "no one here"
     //check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
-    //Update page if enenmy is not
+    //Update page if enenmy is not there
 
 
 
@@ -89,7 +93,7 @@ var fightersArr = [fighter1, fighter2, fighter3, fighter4];
 //This is used to determine what is the index number in the fightersArr when one of the div blocks are selected. It associated with a piece of data in the <div> tag
 var fightersArrIndex;
 //Different states the game could be in 
-var gameStateArr = ["fighterSelected", "currentEnemyDead", "battle", "newEnemy", "win", "lose"]
+var gameStateArr = ["fighterSelected", "currentEnemyDead", "battle", "newEnemy", "win", "lose", "noEnemy"]
 //This will take one of the 6 game states and will be used to write the page appropriately
 var gameState;
 
