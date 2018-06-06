@@ -1,6 +1,6 @@
 //TODOS
 
-//12. UPDATE WRITE LOGIC WITH GAME STATE ARRAY 
+//12.DONE 6/6/2018 UPDATE WRITE LOGIC WITH GAME STATE ARRAY 
 
 //1. DONE 5/27/2018 Make the selectedFighter not selectable again as an enemy...probably remove that class or something??? 
 //2. DONE 6/5/2018 Winning is defeating all 3 enemies, so need to add that as a criteria
@@ -16,8 +16,8 @@
 
     //Only display HP, no more attack points
     //DONE 6/5/2018 hitting attack when no enemy present, update attack area with message "no one here"
-    //check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
-    //Update page if enenmy is not there
+    //DONE 6/6/2018 check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
+    //DONE 6/6/2018 sUpdate page if enenmy is not there
 
 
 
@@ -149,7 +149,7 @@ $(document).ready(function() {
         else if  (gameState === "defeatedEnemy") {
            // $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
 		   console.log("DEFEATED ENEMY TRIGGERED")
-		   $(".battleLog").html("THIS IS A TEST")
+		   $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + "!")
             $(".counterAttackLog").empty();
 			
             if (wins === 3) {
@@ -161,7 +161,7 @@ $(document).ready(function() {
 			$(".battleLog").html(selectedFighter.name +" has defeated all challengers! Hit RESET to play again" );
             $(".counterAttackLog").empty();
 
-        }
+			}
 		}
         
         
@@ -239,51 +239,49 @@ $(document).ready(function() {
     })
 
     $(".attack").click(function() {
-        //only works if both the fighter and enemy is selected
-        console.log("Attack!!!")
-       
+     
 
+		if (gameState === "battle") {
+		
+				//should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
 
-    if (gameState === "battle") {
-    
-            //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
-
-        //updates the HP of the enemy
-        currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
-        //updates the HP of the fighter
-        selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
-            
-        //adds attack modifer after attack
-        selectedFighter.currentAttack += selectedFighter.attackMod;
-        
-            if (currentEnemy.currentHP <= 0) {
-                gameState = "defeatedEnemy";
-                //makes the enemy disappear if they go below 0 HP which makes their display: none 
-                $(currentEnemy.displayArea).addClass("dead");
-                
-                wins += 1;
-                console.log(wins);
-				
+			//updates the HP of the enemy
+			currentEnemy.currentHP = currentEnemy.currentHP - selectedFighter.currentAttack;
+			//updates the HP of the fighter
 			
 				
-                
-            }
-            else if (selectedFighter.currentHP <= 0){
-                
-                console.log("hero dead")
+			//adds attack modifer after attack
+			selectedFighter.currentAttack += selectedFighter.attackMod;
+			
+			if (currentEnemy.currentHP <= 0) {
+				gameState = "defeatedEnemy";
+				//makes the enemy disappear if they go below 0 HP which makes their display: none 
+				$(currentEnemy.displayArea).addClass("dead");
+				
+				wins += 1;
+				console.log(wins);
+			}
+			
+			else {
+				selectedFighter.currentHP = selectedFighter.currentHP - currentEnemy.currentAttack;
+				
+				if (selectedFighter.currentHP <= 0){
+				
+				console.log("hero dead")
 
-                alert("you lose!")
-            }
-          
-            }
-
-       
-		   
-		   writePage();
-            //had to call this after writePage() because of how things were overwriting one another
-
-          
+				alert("you lose!")
+				}
+			}	
+			writePage();
+		 
+				}		
+		else {
+			$(".battleLog").html("You need to chose an enemy" );
+			$(".counterAttackLog").empty()
+			}
+		        
     })
+	
     $(".reset").click(function() { 
         console.log("reset has been hit");
 
