@@ -92,8 +92,8 @@ var fightersArr = [fighter1, fighter2, fighter3, fighter4];
 
 //This is used to determine what is the index number in the fightersArr when one of the div blocks are selected. It associated with a piece of data in the <div> tag
 var fightersArrIndex;
-//Different states the game could be in 
-var gameStateArr = ["fighterSelected", "currentEnemyDead", "battle", "newEnemy", "win", "lose", "noEnemy"]
+
+
 //This will take one of the 6 game states and will be used to write the page appropriately
 var gameState;
 
@@ -104,6 +104,11 @@ var gameState;
 //initiliazes the power of jQuery
 $(document).ready(function() {
     //updates all the fighter's information   
+	
+	// sets the initial game state to be to indicate that no fighter is selected 
+	gameState = "noFighterSelected";
+	writePage();
+	//function which updates the page 
     function writePage() {
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
@@ -121,25 +126,35 @@ $(document).ready(function() {
             //ie state = heroSelected, enemyDefeated, newEnemySelected, battle, lose, win
 
             //the above is what I should do to handle the different states rather than relying on a hodgepodge of settings! 
-
-        if ((isFighterSelected) && (isEnemySelected === false) && wins === 0) {
+		//Trigers after an enemy is selected
+        if (gameState === "fighterSelected") {
             $(".battleLog").html("You have chosen " + selectedFighter.name + "! Good luck! ")
+			gameState = "noEnemy"
         }
+		
+		else if (gameState === "newEnemy") {
+			$(".battleLog").html(selectedFighter.name + "is fighting " + currentEnemy.name );
+			gameState = "battle"
+		}
         
-        else if ((isFighterSelected) && (isEnemySelected)) {
-
+        else if (gameState === "battle") {
+			
             $(".battleLog").html(selectedFighter.name + " did " + selectedFighter.currentAttack + " damage to " + currentEnemy.name );
             $(".counterAttackLog").html(currentEnemy.name + " counterattacked for " + currentEnemy.currentAttack + " damage to " + selectedFighter.name )
             }
             
         //only triggers if wins are greater than 0, so an enemy has been defeated, and no enemy has been selected (which is flipped off by the death of an enemy)
-        else if  (wins > 0 && isEnemySelected === false) {
+        else if  (gameState === "defeatedEnemy") {
             $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
             $(".counterAttackLog").empty();
             if (wins === 3) {
                 $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + "!");
                 $(".counterAttackLog").html(selectedFighter.name + " has defeated all challengers! They are victorious! To play again, click the reset button");
             }
+			
+		else if (gameState === "wonGame") {
+			$(".battleLog").html(selectedFighter.name +" has defeated all challengers! Hit RESET to play again" );
+            $(".counterAttackLog").empty();
 
         }
         
@@ -148,11 +163,9 @@ $(document).ready(function() {
             $(".battleLog").empty();
             $(".counterAttackLog").empty();
         }
-
+		}
 
     }
-
-    writePage();
 
     //apparenlty with jQuery, this listens for any .chooseable element that was created with the page loaded
     //which didn't work when I was hitting reset
@@ -161,11 +174,12 @@ $(document).ready(function() {
    //this one is something about "delegating" which works now with the reset function and the rewritten fighters that appear (YES THEY ARE CLICKABLE)
     $('body').on('click', '.chooseable', function () {
         //if the user has not selected a fighter yet, this triggers
-        if (isFighterSelected === false) {
-
+        if (gameState === "noFighterSelected") {
+			//updates the game state to be "fighterSelected" which will be used to write to the document
+			gameState = "fighterSelected"
             console.log("hero chosen!")
 
-            isFighterSelected = true;
+            //isFighterSelected = true;
             
             //grabs the index number passed from the html 
             fightersArrIndex = $(this).attr("fightersArrIndex");
@@ -189,8 +203,8 @@ $(document).ready(function() {
             console.log("The heroe's name: " + selectedFighter.name);
             writePage();     
         }
-        else if (isEnemySelected === false) {
-            isEnemySelected = true
+        else if ((gameState === "noEnemy") || (gameState="enemyDefeated")) {
+            gameState = "newEnemy";
 
              //grabs the index number passed from the html 
             
@@ -202,18 +216,15 @@ $(document).ready(function() {
             currentEnemy = fightersArr[fightersArrIndex];
 
             //checks to make sure whatever is clicked is not the same div as selected as the selectedFighter
-            if (selectedFighter.name === currentEnemy.name) {
-                //sets currentEnemy to an empty string
-                currentEnemy = "";
-                //sets isEnemySelected to false so the next time a div is pressed, IT will become the enemy
-                isEnemySelected = false;
-            }
+            
             //if it is not the same block, it actually updates the page
-            else {
-                $("#chosenEnemy").append($(this));
+            
+            $("#chosenEnemy").append($(this));
     
-                console.log("The enemy's name is: " + currentEnemy.name);
-            }
+            console.log("The enemy's name is: " + currentEnemy.name);
+			
+			writePage(); 
+            
 
         }         
         else {
@@ -227,7 +238,7 @@ $(document).ready(function() {
        
 
 
-    if ((isEnemySelected) && (isFighterSelected)) {
+    if (gameState === "battle") {
     
             //should nestle these calculations in some type of if/else ... if the enemy HP drops below 0 they should probably die
 
@@ -240,12 +251,16 @@ $(document).ready(function() {
         selectedFighter.currentAttack += selectedFighter.attackMod;
         
             if (currentEnemy.currentHP <= 0) {
-                
+                gameState = "defeatedEnemy";
                 //makes the enemy disappear if they go below 0 HP which makes their display: none 
                 $(currentEnemy.displayArea).addClass("dead");
-                isEnemySelected = false;
+                
                 wins += 1;
                 console.log(wins);
+				writePage();
+				
+			
+				
                 
             }
             else if (selectedFighter.currentHP <= 0){
@@ -257,7 +272,9 @@ $(document).ready(function() {
           
             }
 
-            writePage();
+       
+		   
+		   writePage();
             //had to call this after writePage() because of how things were overwriting one another
 
           
@@ -269,8 +286,7 @@ $(document).ready(function() {
         $("#chosenFighter, #chosenEnemy, #enemiesToSelect, .battleLog, .counterAttackLog,  .fighterDisplay").empty();
        
         //resets the two booleans which govern which area of the page a fighter is placed
-        isFighterSelected = false;
-        isEnemySelected = false;
+ 		gameState = "noFighterSelected"
         wins = 0;
         //cycles through the fightersArr
         for (i = 0; i < fightersArr.length; i ++) {
@@ -295,6 +311,5 @@ $(document).ready(function() {
         //updates the new divs with the fighter's info
         writePage();
     })
-
-
+//closes the document.ready function
 })
