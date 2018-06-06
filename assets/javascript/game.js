@@ -110,6 +110,8 @@ $(document).ready(function() {
 	writePage();
 	//function which updates the page 
     function writePage() {
+		
+		console.log(gameState)
         //cycles through the fighter array to append the fighter's stat to their respective blocks with some light formatting
         for (i = 0; i < fightersArr.length; i++) {
             var newImg = $("<img>");
@@ -133,7 +135,7 @@ $(document).ready(function() {
         }
 		
 		else if (gameState === "newEnemy") {
-			$(".battleLog").html(selectedFighter.name + "is fighting " + currentEnemy.name );
+			$(".battleLog").html(selectedFighter.name + " is fighting " + currentEnemy.name );
 			gameState = "battle"
 		}
         
@@ -145,8 +147,11 @@ $(document).ready(function() {
             
         //only triggers if wins are greater than 0, so an enemy has been defeated, and no enemy has been selected (which is flipped off by the death of an enemy)
         else if  (gameState === "defeatedEnemy") {
-            $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
+           // $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + ". Select a new enemy!" );
+		   console.log("DEFEATED ENEMY TRIGGERED")
+		   $(".battleLog").html("THIS IS A TEST")
             $(".counterAttackLog").empty();
+			
             if (wins === 3) {
                 $(".battleLog").html(selectedFighter.name + " defeated "  + currentEnemy.name + "!");
                 $(".counterAttackLog").html(selectedFighter.name + " has defeated all challengers! They are victorious! To play again, click the reset button");
@@ -157,13 +162,14 @@ $(document).ready(function() {
             $(".counterAttackLog").empty();
 
         }
+		}
         
         
         else {
             $(".battleLog").empty();
             $(".counterAttackLog").empty();
         }
-		}
+		
 
     }
 
@@ -257,7 +263,6 @@ $(document).ready(function() {
                 
                 wins += 1;
                 console.log(wins);
-				writePage();
 				
 			
 				
