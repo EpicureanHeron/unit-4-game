@@ -14,19 +14,11 @@
 //10. DONE 6/5/2018 make it so the hero that is clicked is no longer clickable (can have them fight themselves right now...)
 //11. Rewatch the video, go over criteria again
 
-    //Only display HP, no more attack points
+    //DONE 6/6/2018 Only display HP, no more attack points
     //DONE 6/5/2018 hitting attack when no enemy present, update attack area with message "no one here"
     //DONE 6/6/2018 check logic on counter attack, if a counter attack would have killed my character, it doesn't matter cause I already won
     //DONE 6/6/2018 sUpdate page if enenmy is not there
 
-
-
-//boolean value to determine if fighter has been selected 
-
-var isFighterSelected = false;
-
-//boolean value to determine if an enemey is currently selected
-var isEnemySelected = false;
 
 //initalizes the selectedFighter variable which will be assigned one of the 4 objects below
 var selectedFighter;
@@ -35,18 +27,17 @@ var currentEnemy;
 
 var wins = 0;
 
-
 //object which will be one of the fighters
 var fighter1 = { 
     displayArea: ".fighter1",
     class: "fighter1",
     name: "Thrawn",
     imageSrc: "assets/images/Thrawn.jpg",
-    currentHP: 50,
-    maxHP: 50,
-    attack: 50,
-    currentAttack: 50,
-    attackMod: 5
+    currentHP: 80,
+    maxHP: 80,
+    attack: 6,
+    currentAttack: 6,
+    attackMod: 2
 };
 
 //object which will be one of the fighters
@@ -57,9 +48,9 @@ var fighter2 = {
     imageSrc: "assets/images/bossk.gif",
     currentHP: 150,
     maxHP: 150,
-    attack: 60,
-    currentAttack: 60,
-    attackMod: 5
+    attack: 8,
+    currentAttack: 8,
+    attackMod: 3
 };
 
 //object which will be one of the fighters
@@ -68,11 +59,11 @@ var fighter3 = {
     class: "fighter3",
     name: "IG-88",
     imageSrc: "assets/images/ig88.jpg",
-    currentHP: 100,
-    maxHP: 100,
+    currentHP: 90,
+    maxHP: 90,
     attack: 5,
     currentAttack: 5,
-    attackMod: 5
+    attackMod: 4
 };
 
 //object which will be one of the fighters
@@ -81,11 +72,11 @@ var fighter4 = {
     class: "fighter4",
     name: "Boba Fett",
     imageSrc: "assets/images/BobaFett.jpg",
-    currentHP: 1000,
-    maxHP: 1000,
-    attack: 20,
-    currentAttack: 20,
-    attackMod: 5
+    currentHP: 120,
+    maxHP: 120,
+    attack: 15,
+    currentAttack: 15,
+    attackMod: 1
 };
 
 var fightersArr = [fighter1, fighter2, fighter3, fighter4];
@@ -118,8 +109,9 @@ $(document).ready(function() {
             var imgSrc = fightersArr[i].imageSrc 
             newImg.attr("src", imgSrc);
             newImg.addClass("fighterImage");
-            $(fightersArr[i].displayArea).html("<p class ='fighterStats'>"+ fightersArr[i].name + "<br>" +"HP: " + fightersArr[i].currentHP + "<br>" +"attack: " + fightersArr[i].currentAttack  + "<br>" + "</p>");
+            $(fightersArr[i].displayArea).html("<p class ='fighterStats'>"+ fightersArr[i].name +  "</p>");
             $(fightersArr[i].displayArea).append(newImg);
+            $(fightersArr[i].displayArea).append("<p class ='fighterStats'> Current HP: " + fightersArr[i].currentHP +"</p>")
             }
             //only triggers if both a fighter and an enemy is selected, it updates the battlelog and the counterattack log
 
